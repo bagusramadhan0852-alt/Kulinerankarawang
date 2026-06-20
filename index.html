@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kulineran Karawang — Direktori Tempat Makan Lokal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF4E6;
+    --cream-deep:#F1E7CF;
+    --charcoal:#241D16;
+    --sambal:#B3361F;
+    --sambal-deep:#8C2916;
+    --sawah:#2F4538;
+    --sawah-light:#5C7A5E;
+    --turmeric:#E0A638;
+    --paper-line: rgba(36,29,22,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--charcoal);
+    font-family:'Plus Jakarta Sans', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1140px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3{font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em;}
+  a{color:inherit; text-decoration:none;}
+  .mono{font-family:'IBM Plex Mono', monospace; letter-spacing:0.02em;}
+
+  /* grain texture background */
+  .grain-bg{
+    background-image:
+      radial-gradient(rgba(36,29,22,0.05) 1px, transparent 1px);
+    background-size:14px 14px;
+  }
+
+  /* ===== HEADER ===== */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,244,230,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--paper-line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Fraunces',serif; font-weight:700; font-size:1.2rem;
+  }
+  .logo .grain-icon{
+    width:26px; height:26px; flex:none;
+  }
+  .nav-links{display:flex; gap:28px; font-size:0.92rem; font-weight:600;}
+  .nav-links a{padding-bottom:3px; border-bottom:2px solid transparent; transition:.2s;}
+  .nav-links a:hover{border-color:var(--sambal); color:var(--sambal);}
+  .nav-cta{
+    background:var(--sambal); color:var(--cream); padding:9px 18px;
+    border-radius:3px; font-weight:700; font-size:0.88rem;
+    box-shadow:3px 3px 0 var(--sambal-deep);
+    transition:.15s;
+  }
+  .nav-cta:hover{ transform:translate(1px,1px); box-shadow:2px 2px 0 var(--sambal-deep);}
+  .burger{display:none; background:none; border:none; cursor:pointer;}
+
+  /* ===== HERO ===== */
+  .hero{
+    padding:72px 0 56px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.2fr 0.8fr; gap:48px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono',monospace; font-size:0.78rem; font-weight:500;
+    text-transform:uppercase; letter-spacing:0.08em; color:var(--sawah);
+    background:var(--cream-deep); padding:6px 12px; border-radius:20px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:"●"; color:var(--sambal); font-size:0.6rem;}
+  .hero h1{
+    font-size:3.4rem; line-height:1.04; color:var(--charcoal); margin-bottom:20px;
+  }
+  .hero h1 em{
+    font-style:italic; color:var(--sambal); position:relative;
+  }
+  .hero p.lede{
+    font-size:1.15rem; color:#4a4136; max-width:480px; margin-bottom:32px;
+  }
+  .search-card{
+    background:var(--charcoal); border-radius:8px; padding:8px; display:flex; gap:8px;
+    box-shadow:6px 6px 0 var(--sambal);
+    max-width:520px;
+  }
+  .search-card input{
+    flex:1; border:none; background:transparent; color:var(--cream);
+    padding:12px 14px; font-size:0.98rem; font-family:'Plus Jakarta Sans',sans-serif;
+  }
+  .search-card input::placeholder{color:#a89c89;}
+  .search-card input:focus{outline:none;}
+  .search-card button{
+    background:var(--turmeric); border:none; color:var(--charcoal); font-weight:700;
+    padding:0 22px; border-radius:5px; cursor:pointer; font-size:0.92rem;
+  }
+  .chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;}
+  .chip{
+    font-size:0.82rem; font-weight:600; padding:6px 14px; border-radius:20px;
+    border:1.5px solid var(--paper-line); background:transparent; cursor:pointer;
+    transition:.15s; font-family:'Plus Jakarta Sans',sans-serif;
+  }
+  .chip:hover, .chip.active{ background:var(--sawah); color:var(--cream); border-color:var(--sawah);}
+
+  /* hero illustration: stylised rice-field / map pin sketch */
+  .hero-art{ position:relative; }
+  .hero-art svg{ width:100%; height:auto; }
+
+  /* ===== STATS LEDGER ===== */
+  .ledger{
+    border-top:1px solid var(--paper-line); border-bottom:1px solid var(--paper-line);
+    background:var(--cream-deep);
+  }
+  .ledger .wrap{
+    display:flex; justify-content:space-between; padding:22px 24px; flex-wrap:wrap; gap:18px;
+  }
+  .ledger-item{ font-family:'IBM Plex Mono',monospace; }
+  .ledger-item .num{ font-size:1.6rem; font-weight:600; color:var(--sambal); display:block;}
+  .ledger-item .label{ font-size:0.78rem; color:#5c5346; text-transform:uppercase; letter-spacing:0.05em;}
+
+  /* ===== SECTION TITLES ===== */
+  section{ padding:80px 0; }
+  .section-head{ max-width:620px; margin-bottom:48px; }
+  .section-head .eyebrow{ margin-bottom:14px; }
+  .section-head h2{ font-size:2.3rem; color:var(--charcoal); margin-bottom:14px; }
+  .section-head p{ color:#544b3e; font-size:1.05rem; }
+
+  /* ===== KATEGORI ===== */
+  .kategori-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+  }
+  .kategori-card{
+    border:1.5px solid var(--paper-line); border-radius:10px; padding:26px;
+    background:var(--cream); transition:.2s; cursor:pointer;
+  }
+  .kategori-card:hover{ border-color:var(--sawah); transform:translateY(-3px); box-shadow:0 8px 0 -4px var(--sawah);}
+  .kategori-card .icon{ font-size:1.8rem; margin-bottom:14px; display:block;}
+  .kategori-card h3{ font-size:1.15rem; margin-bottom:6px; font-weight:600;}
+  .kategori-card p{ font-size:0.88rem; color:#665d4f; }
+  .kategori-card .count{ font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:var(--sambal); margin-top:10px; display:block; font-weight:600;}
+
+  /* ===== DIREKTORI / LISTING ===== */
+  .filter-bar{
+    display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px; align-items:center;
+  }
+  .filter-bar .filt{
+    font-size:0.84rem; font-weight:600; padding:7px 16px; border-radius:20px;
+    border:1.5px solid var(--paper-line); cursor:pointer; background:transparent;
+    font-family:'Plus Jakarta Sans',sans-serif;
+  }
+  .filter-bar .filt.active{ background:var(--charcoal); color:var(--cream); border-color:var(--charcoal); }
+  .listing-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+  }
+  .resto-card{
+    border:1px solid var(--paper-line); border-radius:10px; overflow:hidden;
+    background:var(--cream); position:relative; display:flex; flex-direction:column;
+    transition:.2s;
+  }
+  .resto-card:hover{ box-shadow:0 10px 24px -8px rgba(36,29,22,0.25); transform:translateY(-2px); }
+  .resto-photo{
+    height:150px; position:relative; display:flex; align-items:center; justify-content:center;
+    font-size:2.4rem;
+  }
+  .resto-body{ padding:18px 20px 20px; flex:1; display:flex; flex-direction:column; }
+  .resto-body .kec{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--sawah-light); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;}
+  .resto-body h3{ font-size:1.18rem; margin-bottom:6px; }
+  .resto-body p.desc{ font-size:0.9rem; color:#5c5346; flex:1; margin-bottom:14px; }
+  .resto-meta{ display:flex; justify-content:space-between; align-items:center; font-size:0.82rem; color:#544b3e; }
+  .resto-meta .harga{ font-weight:700; color:var(--sambal); }
+  .stamp{
+    position:absolute; top:12px; right:12px;
+    border:2px solid; border-radius:50%;
+    width:62px; height:62px; display:flex; align-items:center; justify-content:center;
+    text-align:center; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.02em; line-height:1.1;
+    transform:rotate(-12deg); background:rgba(250,244,230,0.85);
+  }
+  .stamp.wajib{ border-color:var(--sambal); color:var(--sambal); }
+  .stamp.legend{ border-color:var(--sawah); color:var(--sawah); }
+  .stamp.hits{ border-color:var(--turmeric); color:#8a6418; }
+  .resto-link{
+    display:block; text-align:center; padding:10px; margin-top:14px; font-weight:700;
+    font-size:0.85rem; border-top:1px solid var(--paper-line); color:var(--charcoal);
+  }
+  .resto-link:hover{ color:var(--sambal); }
+  .no-result{ text-align:center; padding:50px 0; color:#7a7062; font-style:italic; display:none; }
+
+  /* ===== KRITERIA ===== */
+  .kriteria{ background:var(--charcoal); color:var(--cream); }
+  .kriteria .section-head p{ color:#c9bfa f; color:#cfc4ad;}
+  .kriteria .eyebrow{ background:rgba(255,255,255,0.08); color:var(--turmeric); }
+  .kriteria-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .kriteria-item{ border-left:2px solid var(--sambal); padding-left:20px; }
+  .kriteria-item .tag{ font-family:'IBM Plex Mono',monospace; font-size:0.78rem; color:var(--turmeric); margin-bottom:8px; display:block; }
+  .kriteria-item h3{ font-size:1.25rem; margin-bottom:10px; color:var(--cream); }
+  .kriteria-item p{ font-size:0.92rem; color:#bdb1 98; color:#bdb198; }
+
+  /* ===== KIRIM REKOMENDASI ===== */
+  .kirim{
+    background:var(--cream-deep); border-radius:16px; padding:48px;
+    display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;
+  }
+  .kirim h2{ font-size:1.9rem; margin-bottom:12px; }
+  .kirim p{ color:#544b3e; margin-bottom:22px; }
+  .form-row{ display:flex; flex-direction:column; gap:14px; }
+  .form-row input, .form-row textarea, .form-row select{
+    padding:12px 14px; border:1.5px solid var(--paper-line); border-radius:6px;
+    font-family:'Plus Jakarta Sans',sans-serif; font-size:0.92rem; background:var(--cream);
+  }
+  .form-row input:focus, .form-row textarea:focus, .form-row select:focus{ outline:2px solid var(--sawah); border-color:var(--sawah);}
+  .form-row button{
+    background:var(--sambal); color:var(--cream); border:none; padding:13px; border-radius:6px;
+    font-weight:700; cursor:pointer; font-size:0.95rem; box-shadow:3px 3px 0 var(--sambal-deep);
+  }
+  .form-row button:hover{ transform:translate(1px,1px); box-shadow:2px 2px 0 var(--sambal-deep); }
+  .form-note{ font-size:0.78rem; color:#7a7062; margin-top:6px; }
+
+  /* ===== FOOTER ===== */
+  footer{ border-top:1px solid var(--paper-line); padding:40px 0; }
+  .foot-grid{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+  .foot-grid .logo{ font-size:1.05rem; }
+  .foot-links{ display:flex; gap:22px; font-size:0.85rem; font-weight:600; }
+  .foot-copy{ font-size:0.78rem; color:#8a8071; margin-top:18px; font-family:'IBM Plex Mono',monospace; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:880px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-art{ order:-1; max-width:280px; margin:0 auto; }
+    .hero h1{ font-size:2.4rem; }
+    .kategori-grid, .listing-grid, .kriteria-grid{ grid-template-columns:1fr 1fr; }
+    .kirim{ grid-template-columns:1fr; padding:30px; }
+    .ledger .wrap{ justify-content:flex-start; gap:30px; }
+  }
+  @media (max-width:600px){
+    .nav-links{ display:none; }
+    .burger{ display:block; }
+    .kategori-grid, .listing-grid, .kriteria-grid{ grid-template-columns:1fr; }
+    .hero h1{ font-size:2rem; }
+    .filter-bar{ overflow-x:auto; flex-wrap:nowrap; padding-bottom:6px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; }
+  }
+  :focus-visible{ outline:2.5px solid var(--sawah); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap nav">
+    <a href="#top" class="logo">
+      <svg class="grain-icon" viewBox="0 0 32 32" fill="none">
+        <path d="M16 2C12 8 10 14 10 19C10 24.5 12.7 28 16 28C19.3 28 22 24.5 22 19C22 14 20 8 16 2Z" fill="#E0A638" stroke="#241D16" stroke-width="1.2"/>
+        <path d="M16 9V24" stroke="#241D16" stroke-width="1" stroke-opacity="0.4"/>
+      </svg>
+      Kulineran Karawang
+    </a>
+    <div class="nav-links">
+      <a href="#kategori">Kategori</a>
+      <a href="#direktori">Direktori</a>
+      <a href="#kriteria">Cara Kami Pilih</a>
+      <a href="#kirim">Kirim Rekomendasi</a>
+    </div>
+    <a href="#kirim" class="nav-cta">+ Tambah Tempat</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero grain-bg">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Direktori kuliner · khusus Karawang</span>
+        <h1>Lapar di Karawang?<br>Jangan asal <em>nyasar</em>.</h1>
+        <p class="lede">Kumpulan warung, resto, dan tempat ngopi yang sudah kami catat dan datangi langsung — dari Klari sampai Rengasdengklok. Bukan iklan, ini catatan orang lokal.</p>
+        <form class="search-card" onsubmit="return false;">
+          <input id="searchInput" type="text" placeholder="Cari nama tempat, menu, atau kecamatan…">
+          <button type="button" onclick="applyFilters()">Cari</button>
+        </form>
+        <div class="chips">
+          <button class="chip" data-cat="semua">Semua</button>
+          <button class="chip" data-cat="sunda">Sunda</button>
+          <button class="chip" data-cat="seafood">Seafood</button>
+          <button class="chip" data-cat="kopi">Kopi &amp; Cemilan</button>
+          <button class="chip" data-cat="mie">Bakso &amp; Mie</button>
+          <button class="chip" data-cat="legend">Warung Legend</button>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="160" cy="160" r="150" fill="#F1E7CF"/>
+          <!-- sawah lines -->
+          <path d="M20 230 Q160 200 300 230" stroke="#5C7A5E" stroke-width="3" fill="none" opacity="0.5"/>
+          <path d="M10 250 Q160 222 310 250" stroke="#5C7A5E" stroke-width="3" fill="none" opacity="0.5"/>
+          <path d="M0 270 Q160 244 320 270" stroke="#5C7A5E" stroke-width="3" fill="none" opacity="0.6"/>
+          <!-- rice stalks -->
+          <g stroke="#2F4538" stroke-width="2" fill="none">
+            <path d="M70 250 C66 220 78 200 72 175"/>
+            <path d="M95 255 C90 222 102 205 96 178"/>
+            <path d="M120 250 C116 218 128 198 122 172"/>
+          </g>
+          <ellipse cx="72" cy="172" rx="9" ry="14" fill="#E0A638"/>
+          <ellipse cx="96" cy="175" rx="9" ry="14" fill="#E0A638"/>
+          <ellipse cx="122" cy="169" rx="9" ry="14" fill="#E0A638"/>
+          <!-- map pin -->
+          <path d="M210 110c0 32-34 62-34 95 0-33-34-63-34-95a34 34 0 0168 0z" fill="#B3361F" stroke="#241D16" stroke-width="2"/>
+          <circle cx="176" cy="110" r="13" fill="#FAF4E6"/>
+          <text x="176" y="115" font-size="14" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#241D16">✓</text>
+          <!-- stamp circle -->
+          <circle cx="245" cy="225" r="34" fill="none" stroke="#2F4538" stroke-width="2" stroke-dasharray="4 3" transform="rotate(-10 245 225)"/>
+          <text x="245" y="222" font-size="9" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#2F4538" transform="rotate(-10 245 225)">SUDAH</text>
+          <text x="245" y="234" font-size="9" text-anchor="middle" font-family="IBM Plex Mono, monospace" fill="#2F4538" transform="rotate(-10 245 225)">DICOBA</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEDGER -->
+  <div class="ledger">
+    <div class="wrap">
+      <div class="ledger-item"><span class="num">140+</span><span class="label">Tempat Tercatat</span></div>
+      <div class="ledger-item"><span class="num">8</span><span class="label">Kecamatan Tercover</span></div>
+      <div class="ledger-item"><span class="num">100%</span><span class="label">Survei Langsung</span></div>
+      <div class="ledger-item"><span class="num">Mingguan</span><span class="label">Update Daftar</span></div>
+    </div>
+  </div>
+
+  <!-- KATEGORI -->
+  <section id="kategori">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Mulai dari sini</span>
+        <h2>Pilih sesuai mood makan kamu</h2>
+        <p>Enam kategori utama yang paling sering dicari orang Karawang — tinggal klik, langsung lompat ke daftarnya.</p>
+      </div>
+      <div class="kategori-grid">
+        <div class="kategori-card" onclick="jumpToCat('sunda')">
+          <span class="icon">🍛</span>
+          <h3>Sunda &amp; Rumahan</h3>
+          <p>Nasi liwet, ikan bakar, sayur asem khas warung kampung.</p>
+          <span class="count">38 tempat</span>
+        </div>
+        <div class="kategori-card" onclick="jumpToCat('seafood')">
+          <span class="icon">🦐</span>
+          <h3>Seafood</h3>
+          <p>Kepiting saus, udang bakar, cumi asam manis untuk acara keluarga.</p>
+          <span class="count">21 tempat</span>
+        </div>
+        <div class="kategori-card" onclick="jumpToCat('kopi')">
+          <span class="icon">☕</span>
+          <h3>Kopi &amp; Cemilan</h3>
+          <p>Tempat ngopi santai, kongkow sore, sampai kerja sambil ngemil.</p>
+          <span class="count">29 tempat</span>
+        </div>
+        <div class="kategori-card" onclick="jumpToCat('mie')">
+          <span class="icon">🍜</span>
+          <h3>Bakso &amp; Mie</h3>
+          <p>Bakso urat, mie kocok, sampai mie ayam langganan abang ojek.</p>
+          <span class="count">24 tempat</span>
+        </div>
+        <div class="kategori-card" onclick="jumpToCat('legend')">
+          <span class="icon">🏮</span>
+          <h3>Warung Legend</h3>
+          <p>Sudah buka puluhan tahun, jadi saksi Karawang dari dulu sampai sekarang.</p>
+          <span class="count">15 tempat</span>
+        </div>
+        <div class="kategori-card" onclick="jumpToCat('kekinian')">
+          <span class="icon">🍰</span>
+          <h3>Kekinian</h3>
+          <p>Konsep estetik, cocok buat foto-foto dan nongkrong bareng teman.</p>
+          <span class="count">13 tempat</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIREKTORI -->
+  <section id="direktori" style="background:var(--cream-deep);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Direktori lengkap</span>
+        <h2>Daftar tempat makan</h2>
+        <p>Saring berdasarkan kecamatan atau kategori. Cap di pojok kartu menandakan alasan kami merekomendasikan tempat itu.</p>
+      </div>
+
+      <div class="filter-bar" id="catFilterBar">
+        <button class="filt active" data-cat="semua">Semua Kategori</button>
+        <button class="filt" data-cat="sunda">Sunda</button>
+        <button class="filt" data-cat="seafood">Seafood</button>
+        <button class="filt" data-cat="kopi">Kopi &amp; Cemilan</button>
+        <button class="filt" data-cat="mie">Bakso &amp; Mie</button>
+        <button class="filt" data-cat="legend">Warung Legend</button>
+        <button class="filt" data-cat="kekinian">Kekinian</button>
+      </div>
+      <div class="filter-bar" id="kecFilterBar">
+        <button class="filt active" data-kec="semua">Semua Kecamatan</button>
+        <button class="filt" data-kec="Karawang Barat">Karawang Barat</button>
+        <button class="filt" data-kec="Karawang Timur">Karawang Timur</button>
+        <button class="filt" data-kec="Klari">Klari</button>
+        <button class="filt" data-kec="Telukjambe">Telukjambe</button>
+        <button class="filt" data-kec="Cikampek">Cikampek</button>
+        <button class="filt" data-kec="Rengasdengklok">Rengasdengklok</button>
+      </div>
+
+      <div class="listing-grid" id="listingGrid"></div>
+      <p class="no-result" id="noResult">Belum ada tempat yang cocok dengan filter ini. Coba kata kunci lain.</p>
+    </div>
+  </section>
+
+  <!-- KRITERIA -->
+  <section id="kriteria" class="kriteria">
+    <div class="wrap">
+      <div class="section-head">
+       
